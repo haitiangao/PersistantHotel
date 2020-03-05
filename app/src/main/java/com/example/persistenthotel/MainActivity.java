@@ -104,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
 
             guestList.add(new Guest(prefix, name, date));
 
-            Log.d("TAG_X", prefix);
+            Log.d("TAG_X", date);
         }
         refreshView();
 
@@ -136,8 +136,9 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(guestKeyPrefix + guestCount, guestName);
         editor.putString(guestPrefixPrefix + guestCount, guestPrefix);
+        editor.putString(guestDatePrefix+guestCount,date);
         editor.putInt(GUEST_COUNT_KEY, guestCount);
-        editor.commit();
+        editor.apply();
 
         guestNameEditText.setText("");
 
@@ -164,7 +165,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
 
         String date = new SimpleDateFormat("mm/dd/yyyy HH:mm", Locale.US).format(new Date());
 
-        Log.d("TAG_X", "user click item received "+ guest.getActualName() + " ON DATE :" +date);
+        Log.d("TAG_X", "user click item received "+ guest.getDateMade() + " ON DATE :" +date);
 
         Intent displayIntent = new Intent(this, DisplayGuestActivity.class);
         displayIntent.putExtra(DisplayGuestActivity.GUEST_KEY, guest);

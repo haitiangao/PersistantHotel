@@ -30,7 +30,8 @@ public class DisplayGuestActivity extends AppCompatActivity {
 
         ButterKnife.bind(this);
 
-        Guest showGuest = ((Guest) getIntent().getSerializableExtra(GUEST_KEY));
+        Bundle data = getIntent().getExtras();
+        Guest showGuest = (Guest) data.getParcelable(GUEST_KEY);
         selectedGuest.setText(showGuest.getActualName());
         selectedPrefix.setText(showGuest.getPrefix());
         dateView.setText(showGuest.getDateMade());
