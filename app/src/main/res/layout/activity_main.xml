@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".view.MainActivity">
 
     <EditText
         android:id="@+id/editText"
@@ -25,17 +25,8 @@
         android:onClick="addGuestToList"
         android:text="@string/add_new_guest_text"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/add_guest_button2"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/add_guest_button2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:onClick="removeAll"
-        android:text="@string/remove_all"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
 
     <Spinner
         android:id="@+id/prefixSpinner"

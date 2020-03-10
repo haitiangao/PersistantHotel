@@ -1,4 +1,4 @@
-package com.example.persistenthotel;
+package com.example.persistenthotel.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.example.persistenthotel.model.Guest;
+import com.example.persistenthotel.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -1,4 +1,4 @@
-package com.example.persistenthotel;
+package com.example.persistenthotel.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -8,15 +8,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.persistenthotel.adapter.MyRecyclerAdaptor;
+import com.example.persistenthotel.R;
+import com.example.persistenthotel.database.myDatabaseHelper;
+import com.example.persistenthotel.model.Guest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -48,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
     private List<Guest> guestList = new ArrayList<Guest>();
 
     private final String GUEST_COUNT_KEY = "guest.count.key";
+    private myDatabaseHelper databaseHelper;
 
     @BindView(R.id.editText)
     EditText guestNameEditText;
@@ -65,9 +71,11 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-
-        sharedPreferences = getSharedPreferences("com.example.persistenthotel", Context.MODE_PRIVATE);
+        //This is shared Preferences
+        //sharedPreferences = getSharedPreferences("com.example.persistenthotel", Context.MODE_PRIVATE);
         //SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        // With Internal Storage
         //editor.clear();
         //editor.commit();
 
@@ -82,15 +90,64 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
         recycleGuestView.setAdapter(new MyRecyclerAdaptor(guestList, this));
         recycleGuestView.addItemDecoration(itemDecoration);
 
+        //try {
+        //    readGuests();
+        //} catch (ParseException e) {
+        //    e.printStackTrace();
+        //}
 
-        try {
-            readGuests();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
+        databaseHelper = new myDatabaseHelper(this,
+                null, null, 0);
+        readFromDatabase();
+
+
 
     }
 
+    private void readFromDatabase() {
+        Cursor guestCursor  = databaseHelper.readAllGuests();
+        guestCursor.move(-1);
+        guestList.clear();
+        while(guestCursor.moveToNext()){
+            String guestName = guestCursor.getString(guestCursor.getColumnIndex(myDatabaseHelper.COLUMN_GUEST_NAME));
+            String guestPrefix = guestCursor.getString(guestCursor.getColumnIndex(myDatabaseHelper.COLUMN_GUEST_PREFIX));
+            String date = guestCursor.getString(guestCursor.getColumnIndex(myDatabaseHelper.COLUMN_DATE_MADE));
+            int guestID = guestCursor.getInt(guestCursor.getColumnIndex(myDatabaseHelper.COLUMN_GUEST_ID));
+
+            guestList.add(new Guest(guestID,guestPrefix,guestName,date));
+        }
+        refreshView();
+        guestCursor.close();
+
+    }
+
+
+    public void addGuestToList (View view) {
+        Log.d("TAG_H", "Help");
+        String guestName = guestNameEditText.getText().toString().trim();
+        Log.d("TAG_H", "Help2");
+
+        String guestPrefix = prefixSelector.getSelectedItem().toString();
+        Log.d("TAG_H", "Help3");
+
+        String date = new SimpleDateFormat("mm/dd/yyyy HH:mm", Locale.US).format(new Date());
+        Log.d("TAG_H", "Help4");
+
+        guestNameEditText.setText("");
+
+        Guest newGuest = new Guest(guestPrefix,guestName,date);
+
+        databaseHelper.addNewGuest(newGuest);
+
+        readFromDatabase();
+    }
+
+
+
+
+
+    // Below is the the internal storage
     private void readGuests () throws ParseException {
         guestCount = sharedPreferences.getInt(GUEST_COUNT_KEY, 0);
         nameList.clear();//To avoid adding the same values
@@ -110,6 +167,9 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
 
     }
 
+
+
+/*
     public void removeAll(View view){
         sharedPreferences = getSharedPreferences("com.example.persistenthotel", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -119,8 +179,14 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
         guestCount=0;
         refreshView();
 
-    }
+    }*/
 
+    @Override
+    public void deleteGuest(Guest deleteGuest) {
+        databaseHelper.deleteGuest(deleteGuest);
+        readFromDatabase();
+    }
+    /*
     public void addGuestToList (View view) {
 
         //myAdaptor = new myAdaptor(nameList);
@@ -146,6 +212,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
         guestList.add(new Guest(guestPrefix, guestName, date));
         refreshView();
     }
+*/
 
     private void refreshView(){
         //myAdaptor = new myAdaptor(nameList);
@@ -185,6 +252,10 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        databaseHelper.close();
+    }
 
 }

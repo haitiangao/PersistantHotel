@@ -1,4 +1,4 @@
-package com.example.persistenthotel;
+package com.example.persistenthotel.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,7 +7,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.persistenthotel.R;
-import com.example.persistenthotel.Guest;
+import com.example.persistenthotel.model.Guest;
 
 import java.util.List;
 

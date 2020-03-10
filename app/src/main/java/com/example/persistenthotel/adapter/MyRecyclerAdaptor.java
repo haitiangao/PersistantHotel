@@ -1,13 +1,16 @@
-package com.example.persistenthotel;
+package com.example.persistenthotel.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.persistenthotel.R;
+import com.example.persistenthotel.model.Guest;
 
 import java.util.List;
 
@@ -25,6 +28,8 @@ public class MyRecyclerAdaptor extends RecyclerView.Adapter<MyRecyclerAdaptor.Gu
     }
 
     public interface UserClickListener {
+        void deleteGuest(Guest deleteGuest);
+
         void displayUser(Guest guest);
     }
 
@@ -45,6 +50,11 @@ public class MyRecyclerAdaptor extends RecyclerView.Adapter<MyRecyclerAdaptor.Gu
         holder.itemView.setOnClickListener(view -> {
             userClickListener.displayUser(guestList.get(position));
         });
+
+        holder.deleteButton.setOnClickListener(view ->{
+            userClickListener.deleteGuest(guestList.get(position));
+        });
+
     }
 
     @Override
@@ -59,6 +69,8 @@ public class MyRecyclerAdaptor extends RecyclerView.Adapter<MyRecyclerAdaptor.Gu
         TextView NameTextView;
         @BindView(R.id.prefix_textview)
         TextView PrefixTextView;
+        @BindView(R.id.deletGuestButton)
+        Button deleteButton;
 
         public GuestViewHolder(@NonNull View itemView) {
             super(itemView);

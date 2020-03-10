@@ -1,21 +1,27 @@
-package com.example.persistenthotel;
+package com.example.persistenthotel.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-
-import java.io.Serializable;
-import java.util.Date;
 
 public class Guest implements Parcelable {
     private String prefix;
     private String actualName;
     private String dateMade;
+    private int guestID;
+
+    public Guest(int guestID, String prefix, String actualName, String dateMade){
+        this.guestID=guestID;
+        this.prefix=prefix;
+        this.actualName=actualName;
+        this.dateMade=dateMade;
+    }
 
     public Guest(String prefix, String actualName, String dateMade){
         this.prefix=prefix;
         this.actualName=actualName;
         this.dateMade=dateMade;
     }
+
 
     protected Guest(Parcel in) {
         prefix = in.readString();
@@ -46,7 +52,6 @@ public class Guest implements Parcelable {
     public String getActualName(){
         return actualName;
     }
-
     public void setActualName(String actualName){
         this.actualName=actualName;
     }
@@ -56,6 +61,8 @@ public class Guest implements Parcelable {
         this.dateMade=dateMade;
     }
 
+    public int getGuestID(){return guestID;}
+    public void setGuestID(int guestID){this.guestID=guestID;}
 
     @Override
     public int describeContents() {
