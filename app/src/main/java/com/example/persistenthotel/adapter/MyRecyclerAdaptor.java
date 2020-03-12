@@ -28,9 +28,8 @@ public class MyRecyclerAdaptor extends RecyclerView.Adapter<MyRecyclerAdaptor.Gu
     }
 
     public interface UserClickListener {
-        void deleteGuest(Guest deleteGuest);
 
-        void displayUser(Guest guest);
+        void signingIn(Guest guest);
     }
 
     @NonNull
@@ -46,14 +45,11 @@ public class MyRecyclerAdaptor extends RecyclerView.Adapter<MyRecyclerAdaptor.Gu
 
         holder.NameTextView.setText(guestList.get(position).getActualName());
         holder.PrefixTextView.setText(guestList.get(position).getPrefix());
+        holder.HotelNumber.setText(String.format("Room: %s", guestList.get(position).getRoomNumber()));
 
-        holder.itemView.setOnClickListener(view -> {
-            userClickListener.displayUser(guestList.get(position));
-        });
-
-        holder.deleteButton.setOnClickListener(view ->{
-            userClickListener.deleteGuest(guestList.get(position));
-        });
+        holder.itemView.setOnClickListener(view ->
+                userClickListener.signingIn(guestList.get(position))
+        );
 
     }
 
@@ -69,8 +65,8 @@ public class MyRecyclerAdaptor extends RecyclerView.Adapter<MyRecyclerAdaptor.Gu
         TextView NameTextView;
         @BindView(R.id.prefix_textview)
         TextView PrefixTextView;
-        @BindView(R.id.deletGuestButton)
-        Button deleteButton;
+        @BindView(R.id.hotel_Number)
+        TextView HotelNumber;
 
         public GuestViewHolder(@NonNull View itemView) {
             super(itemView);

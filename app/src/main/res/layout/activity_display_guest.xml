@@ -9,7 +9,7 @@
     android:layout_margin="4dp">
 
     <TextView
-        android:id="@+id/selectedGuest"
+        android:id="@+id/selected_Guest"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/dimen_16dp"
@@ -17,7 +17,7 @@
         android:layout_marginTop="@dimen/dimen_16dp"
         android:textSize="@dimen/text_24sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/selectedPrefix"
+        app:layout_constraintStart_toEndOf="@+id/selected_Prefix"
         app:layout_constraintTop_toBottomOf="@id/profile_imageview"
         tools:text="Hello World" />
 
@@ -33,7 +33,7 @@
         />
 
     <TextView
-        android:id="@+id/selectedPrefix"
+        android:id="@+id/selected_Prefix"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/dimen_16dp"
@@ -44,16 +44,18 @@
         tools:text="Hello World" />
 
     <TextView
-        android:id="@+id/content_textview"
-        android:layout_width="0dp"
+        android:id="@+id/hotel_Number_view"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:layout_margin="@dimen/dimen_16dp"
-        android:layout_marginBottom="451dp"
-        app:layout_constraintBottom_toTopOf="@+id/finishButton"
+        android:layout_marginRight="@dimen/dimen_16dp"
+        android:layout_marginLeft="@dimen/dimen_8dp"
+        android:layout_marginTop="@dimen/dimen_16dp"
+        android:textSize="@dimen/text_24sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectedGuest"
-        tools:text="@string/fitnessgram" />
+        app:layout_constraintTop_toBottomOf="@+id/selected_Guest"
+        tools:text="RoomNumber" />
 
     <TextView
         android:id="@+id/dateView"
@@ -70,11 +72,29 @@
         android:id="@+id/finishButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Go Back"
         android:onClick="backToPrevious"
+        android:text="Go Back"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete"
+        android:onClick="deleteGuest"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/guideline" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintGuide_begin="201dp" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
