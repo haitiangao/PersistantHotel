@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
 
     private List<Guest> guestList = new ArrayList<Guest>();
     private myDatabaseHelper databaseHelper;
-    private boolean loggedIn;
 
     @BindView(R.id.guestRecycleView)
     RecyclerView recycleGuestView;
@@ -51,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        //readFromContentProvider();
+        readFromContentProvider();
 
         DividerItemDecoration itemDecoration = new DividerItemDecoration(this, RecyclerView.VERTICAL);
         recycleGuestView.setLayoutManager(new LinearLayoutManager(this));
@@ -142,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
 
     }
 
-/*
+    //EXAMPLE READFROMCONTENT
     private void readFromContentProvider() {
 
         String uri = "content://com.example.persistenthotel.provider.HotelContentProvider/guests";
@@ -159,7 +158,7 @@ public class MainActivity extends AppCompatActivity implements MyRecyclerAdaptor
         }
 
         guestCursor.close();
-    }*/
+    }
 
 
     @Override

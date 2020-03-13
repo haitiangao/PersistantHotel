@@ -27,6 +27,10 @@ public class myDatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, factory, DB_VERSION);
     }
 
+    public myDatabaseHelper(@Nullable Context context) {
+        super(context, DATABASE_NAME, null, DB_VERSION);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -71,6 +75,10 @@ public class myDatabaseHelper extends SQLiteOpenHelper {
 
         Cursor allGuests = getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME, null, null);
         return allGuests;
+    }
+
+    public Cursor readSingleGuest(String guestID) {
+        return getReadableDatabase().rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE " + COLUMN_GUEST_ID + " = " + guestID, null);
     }
 
     public void deleteGuest(Guest deleteGuest) {

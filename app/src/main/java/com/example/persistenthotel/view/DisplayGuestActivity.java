@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.persistenthotel.database.myDatabaseHelper;
 import com.example.persistenthotel.model.Guest;
 import com.example.persistenthotel.R;
@@ -51,6 +52,31 @@ public class DisplayGuestActivity extends AppCompatActivity {
         dateView.setText(showGuest.getDateMade());
         hotelRoomView.setText(String.format("Room number: %s", showGuest.getRoomNumber()));
 
+        Log.d("TAG_H", "Guest prefex:  " + showGuest.getPrefix());
+
+        if (showGuest.getPrefix().equals("")) {
+            Glide.with(this)
+                    .load("https://www.pngkey.com/png/full/308-3081138_contact-avatar-generic.png")
+                    .into(profilePicture);
+        }
+        else if ("Mr.".equals(showGuest.getPrefix())) {
+            Glide.with(this)
+                    .load("https://www.krocmemphis.org/wp-content/uploads/2016/10/generic-avatar.png")
+                    .into(profilePicture);
+
+        }
+        else if ("Mrs.".equals(showGuest.getPrefix())) {
+            Glide.with(this).load("https://curatti.com/wp-content/uploads/2017/05/generic-avatar-image1.png").into(profilePicture);
+
+        }
+        else if ("Ms.".equals(showGuest.getPrefix())) {
+            Glide.with(this).load("https://publicdomainvectors.org/tn_img/Female-Avatar-3.png").into(profilePicture);
+
+        }
+        else if ("Dr.".equals(showGuest.getPrefix())) {
+            Glide.with(this).load("https://www.rochesterregional.org/physician-directory/t/taylor-adia/-/media/rrh/physicians/t/generic-avatar.jpg").into(profilePicture);
+
+        }
         databaseHelper = new myDatabaseHelper(this,
                 null, null, 0);
 
